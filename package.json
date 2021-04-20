@@ -1,7 +1,7 @@
 {
   "name": "coc-esbonio",
   "version": "0.1.2",
-  "esbonioLsVersion": "0.5.0",
+  "esbonioLsVersion": "0.5.1",
   "description": "",
   "author": "yaegassy <yosstools@gmail.com>",
   "license": "MIT",
