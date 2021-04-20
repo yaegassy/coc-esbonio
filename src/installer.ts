@@ -19,11 +19,7 @@ export async function esbonioLsInstall(context: ExtensionContext): Promise<void>
   statusItem.show();
 
   const installCmd =
-    //`python3 -m venv ${pathVenv} && ` + `${pathPip} install -U pip 'esbonio[lsp]'==${ESBONIO_LS_VERSION}`;
-    //
-    // MEMO: Currently, if I install esbonio[lsp] normally, I cannot start it.  There is a version problem with pygls.
-    // REF: I've already created the issue. <https://github.com/swyddfa/esbonio/issues/147>
-    `python3 -m venv ${pathVenv} && ` + `${pathPip} install -U pip 'esbonio[lsp]'==${ESBONIO_LS_VERSION} pygls==0.9.1`;
+    `python3 -m venv ${pathVenv} && ` + `${pathPip} install -U pip 'esbonio[lsp]'==${ESBONIO_LS_VERSION}`;
 
   rimraf.sync(pathVenv);
   try {
