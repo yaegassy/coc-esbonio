@@ -34,8 +34,8 @@ function getPythonPath(config: WorkspaceConfiguration): string {
 export async function activate(context: ExtensionContext): Promise<void> {
   const { subscriptions } = context;
   const extensionConfig = workspace.getConfiguration('esbonio');
-  const enable = extensionConfig.enable;
-  if (!enable) return;
+  const isEnable = extensionConfig.get<boolean>('enable', true);
+  if (!isEnable) return;
 
   const extensionStoragePath = context.storagePath;
   if (!fs.existsSync(extensionStoragePath)) {
