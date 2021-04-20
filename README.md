@@ -2,6 +2,8 @@
 
 [esbonio](https://pypi.org/project/esbonio/) ([Sphinx] Python Documentation Generator) language server extension for [coc.nvim](https://github.com/neoclide/coc.nvim)
 
+<img width="780" alt="coc-esbonio-demo" src="https://user-images.githubusercontent.com/188642/115412271-200fc880-a22f-11eb-845f-23fe736c0de3.gif">
+
 ## Features
 
 - Completion
