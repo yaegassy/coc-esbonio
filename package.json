@@ -1,0 +1,111 @@
+{
+  "name": "coc-esbonio",
+  "version": "0.0.1",
+  "esbonioLsVersion": "0.5.0",
+  "description": "",
+  "author": "yaegassy <yosstools@gmail.com>",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "coc.nvim",
+    "vim",
+    "neovim",
+    "python",
+    "sphinx"
+  ],
+  "engines": {
+    "coc": "^0.0.80"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yaegassy/coc-esbonio"
+  },
+  "scripts": {
+    "lint": "eslint src --ext ts",
+    "clean": "rimraf lib",
+    "watch": "node esbuild.js --watch",
+    "build": "node esbuild.js",
+    "prepare": "node esbuild.js"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 120,
+    "semi": true
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/rimraf": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.8.2",
+    "@typescript-eslint/parser": "^4.8.2",
+    "coc.nvim": "^0.0.80",
+    "esbuild": "^0.8.42",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.2",
+    "semver": "^7.3.2"
+  },
+  "activationEvents": [
+    "onLanguage:rst",
+    "workspaceContains:**/conf.py"
+  ],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "coc-esbonio configuration",
+      "properties": {
+        "esbonio.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable coc-esbonio extension"
+        },
+        "esbonio.server.pythonPath": {
+          "scope": "window",
+          "type": "string",
+          "default": "",
+          "description": "Custom python path with esbonio[lsp] installed (Absolute path)"
+        },
+        "esbonio.server.logLevel": {
+          "scope": "application",
+          "type": "string",
+          "default": "error",
+          "enum": [
+            "debug",
+            "info",
+            "error"
+          ],
+          "description": "The level of log message to show in the log"
+        },
+        "esbonio.server.logFilter": {
+          "scope": "application",
+          "type": "array",
+          "default": null,
+          "items": {
+            "type": "string"
+          },
+          "description": "A list of logger names to limit output from"
+        },
+        "esbonio.server.hideSphinxOutput": {
+          "scope": "application",
+          "type": "boolean",
+          "default": false,
+          "description": "Hide Sphinx build output from the Language Server log."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "esbonio.languageServer.install",
+        "title": "Install/Upgrade Language Server",
+        "category": "Esbonio"
+      },
+      {
+        "command": "esbonio.languageServer.restart",
+        "title": "Restart Language Server",
+        "category": "Esbonio"
+      }
+    ]
+  }
+}
