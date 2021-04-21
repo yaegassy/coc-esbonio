@@ -61,6 +61,11 @@
           "default": true,
           "description": "Enable coc-esbonio extension"
         },
+        "esbonio.enableFixDirectiveCompletion": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable fix patch for `Directive` completion issue"
+        },
         "esbonio.server.pythonPath": {
           "scope": "window",
           "type": "string",

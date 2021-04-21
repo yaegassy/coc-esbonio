@@ -1,8 +1,14 @@
 import {
+  CancellationToken,
   commands,
+  CompletionContext,
+  CompletionItem,
+  CompletionList,
   ExtensionContext,
   LanguageClient,
   LanguageClientOptions,
+  Position,
+  ProvideCompletionItemsSignature,
   ServerOptions,
   services,
   workspace,
@@ -79,6 +85,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
     return;
   }
 
+  const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
+
   const pythonArgs = [
     '-m',
     'esbonio',
@@ -113,6 +121,45 @@ export async function activate(context: ExtensionContext): Promise<void> {
       //{ scheme: 'file', language: 'python' },
     ],
     outputChannelName: 'esbonio',
+    middleware: {
+      provideCompletionItem: async (
+        document,
+        position: Position,
+        context: CompletionContext,
+        token: CancellationToken,
+        next: ProvideCompletionItemsSignature
+      ) => {
+        const res = await Promise.resolve(next(document, position, context, token));
+        const doc = workspace.getDocument(document.uri);
+        if (!doc || !res) return [];
+
+        const items: CompletionItem[] = res.hasOwnProperty('isIncomplete')
+          ? (res as CompletionList).items
+          : (res as CompletionItem[]);
+
+        // MEMO:
+        // -----
+        // Unnecessary dots are inserted at the end of "directives" when completing them.
+        //
+        // VSCode extension seems to be fine, but coc.nvim has this symptom.
+        //
+        // Added a patch to adjust the textEdit.range.end.character returned by LS,
+        // since it seems to be wrong.
+        //
+        // I've already added a dedicated setting to enable/disable it, just in case.
+        if (isFixDirectiveCompletion) {
+          items.forEach((e) => {
+            if (e.detail === 'directive') {
+              if (e.textEdit?.range) {
+                e.textEdit.range.end.character = e.textEdit.range.end.character + 1;
+              }
+            }
+          });
+        }
+
+        return items;
+      },
+    },
   };
 
   const client = new LanguageClient('esbonio', 'Esbonio Language Server', serverOptions, clientOptions);
