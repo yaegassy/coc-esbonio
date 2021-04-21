@@ -50,6 +50,7 @@ You can also run the installation command manually.
 ## Configuration options
 
 - `esbonio.enable`: Enable coc-esbonio extension, default: `true`
+- `esbonio.enableFixDirectiveCompletion`: Enable fix patch for `Directive` completion issue, default: `true`
 - `esbonio.server.pythonPath`: Custom python path with esbonio[lsp] installed (Absolute path), default: `""`
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`
