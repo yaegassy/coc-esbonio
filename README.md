@@ -11,6 +11,8 @@
 - Diagnostics
   - The Language Server is able to catch some of the errors Sphinx outputs while building and publish them as diagnostic messages
     - (Build in the cache directory)
+- Code Action by client feature
+  - Section builder feature.
 
 ## Install
 
@@ -51,6 +53,9 @@ You can also run the installation command manually.
 
 - `esbonio.enable`: Enable coc-esbonio extension, default: `true`
 - `esbonio.enableFixDirectiveCompletion`: Enable fix patch for `Directive` completion issue, default: `true`
+- `esbonio.client.sectionCharacterLevel1`: Character to be used in the Section builder (level1) of the code action, default: `"="`,
+- `esbonio.client.sectionCharacterLevel2`: Character to be used in the Section builder (level2) of the code action, default: `"-"`,
+- `esbonio.client.sectionCharacterLevel3`: Character to be used in the Section builder (level3) of the code action, default: `"~"`,
 - `esbonio.server.pythonPath`: Custom python path with esbonio[lsp] installed (Absolute path), default: `""`
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`
