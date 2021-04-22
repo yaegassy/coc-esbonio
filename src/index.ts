@@ -7,6 +7,7 @@ import {
   ExtensionContext,
   LanguageClient,
   LanguageClientOptions,
+  languages,
   Position,
   ProvideCompletionItemsSignature,
   ServerOptions,
@@ -23,6 +24,7 @@ import child_process from 'child_process';
 import util from 'util';
 
 import { esbonioLsInstall } from './installer';
+import { EsbonioCodeActionProvider } from './action';
 
 const exec = util.promisify(child_process.exec);
 
@@ -177,6 +179,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
       await client.stop();
       client.start();
     })
+  );
+
+  const codeActionProvider = new EsbonioCodeActionProvider();
+  context.subscriptions.push(
+    languages.registerCodeActionProvider([{ scheme: 'file', language: 'rst' }], codeActionProvider, 'esbonio')
   );
 }
 

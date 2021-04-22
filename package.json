@@ -66,6 +66,66 @@
           "default": true,
           "description": "Enable fix patch for `Directive` completion issue"
         },
+        "esbonio.client.sectionCharacterLevel1": {
+          "type": "string",
+          "default": "=",
+          "enum": [
+            "=",
+            "-",
+            ":",
+            "~",
+            ".",
+            "^",
+            "_",
+            "*",
+            "+",
+            "#",
+            "\"",
+            "'",
+            "`"
+          ],
+          "description": "Character to be used in the Section builder (level1) of the code action"
+        },
+        "esbonio.client.sectionCharacterLevel2": {
+          "type": "string",
+          "default": "-",
+          "enum": [
+            "=",
+            "-",
+            ":",
+            "~",
+            ".",
+            "^",
+            "_",
+            "*",
+            "+",
+            "#",
+            "\"",
+            "'",
+            "`"
+          ],
+          "description": "Character to be used in the Section builder (level2) of the code action"
+        },
+        "esbonio.client.sectionCharacterLevel3": {
+          "type": "string",
+          "default": "~",
+          "enum": [
+            "=",
+            "-",
+            ":",
+            "~",
+            ".",
+            "^",
+            "_",
+            "*",
+            "+",
+            "#",
+            "\"",
+            "'",
+            "`"
+          ],
+          "description": "Character to be used in the Section builder (level3) of the code action"
+        },
         "esbonio.server.pythonPath": {
           "scope": "window",
           "type": "string",
