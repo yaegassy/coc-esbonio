@@ -12,7 +12,7 @@
   - The Language Server is able to catch some of the errors Sphinx outputs while building and publish them as diagnostic messages
     - (Build in the cache directory)
 - Code Action by client feature
-  - Section builder feature.
+  - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
 
 ## Install
 
