@@ -30,7 +30,7 @@ Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
 
 1. `esbonio.server.pythonPath` setting
 1. Current python3 environment (e.g. venv or system global)
-1. builtin `venv/bin/python` (Installation commands are also provided)
+1. builtin `venv/bin/python` or `venv/Scripts/python.exe` (Installation commands are also provided)
 
 ## Bult-in install
 
