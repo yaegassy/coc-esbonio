@@ -14,7 +14,6 @@ import {
   services,
   workspace,
   window,
-  WorkspaceConfiguration,
 } from 'coc.nvim';
 
 import fs from 'fs';
@@ -23,21 +22,12 @@ import path from 'path';
 import child_process from 'child_process';
 import util from 'util';
 
+import which from 'which';
+
 import { esbonioLsInstall } from './installer';
 import { EsbonioCodeActionProvider } from './action';
 
 const exec = util.promisify(child_process.exec);
-
-// TODO: Enhancing python3 path-detect
-function getPythonPath(config: WorkspaceConfiguration): string {
-  // eslint-disable-next-line prefer-const
-  let pythonPath = config.get<string>('pythonPath');
-  if (pythonPath) {
-    return pythonPath;
-  }
-
-  return 'python3';
-}
 
 export async function activate(context: ExtensionContext): Promise<void> {
   const { subscriptions } = context;
@@ -56,27 +46,45 @@ export async function activate(context: ExtensionContext): Promise<void> {
   //
   // 1. esbonio.server.pythonPath setting
   // 2. Current python3 environment (e.g. venv and system global)
-  // 3. builtin venv/bin/python
+  // 3. builtin venv python
   let esbonioServerPythonPath = extensionConfig.get('server.pythonPath', '');
   if (esbonioServerPythonPath && !(await existsEnvEsbonio(esbonioServerPythonPath))) {
     window.showErrorMessage(`Exit, because "esbonio" does not exist in your "esbonio.server.pythonPath" setting`);
     return;
   }
 
+  let pythonCommand = esbonioServerPythonPath;
+  if (!pythonCommand) {
+    pythonCommand = detectPythonCommand();
+  }
+
   if (!esbonioServerPythonPath) {
-    if (await existsEnvEsbonio(getPythonPath(extensionConfig))) {
-      esbonioServerPythonPath = getPythonPath(extensionConfig);
-    } else if (fs.existsSync(path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python'))) {
-      if (await existsEnvEsbonio(path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python'))) {
-        esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python');
+    if (await existsEnvEsbonio(pythonCommand)) {
+      esbonioServerPythonPath = pythonCommand;
+    } else if (
+      fs.existsSync(path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python.exe')) ||
+      fs.existsSync(path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python'))
+    ) {
+      if (process.platform === 'win32') {
+        if (await existsEnvEsbonio(path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python.exe'))) {
+          esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python.exe');
+        }
+      } else {
+        if (await existsEnvEsbonio(path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python'))) {
+          esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python');
+        }
       }
     }
   }
 
   // Install "esbonio[lsp]" if it does not exist.
   if (!esbonioServerPythonPath) {
-    await installWrapper(context);
-    esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python');
+    await installWrapper(pythonCommand, context);
+    if (process.platform === 'win32') {
+      esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python.exe');
+    } else {
+      esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python');
+    }
   }
 
   // If "esbonio[lsp]" does not exist completely, terminate the process.
@@ -170,7 +178,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
-      await installWrapper(context);
+      await installWrapper(pythonCommand, context);
     })
   );
 
@@ -187,7 +195,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   );
 }
 
-async function installWrapper(context: ExtensionContext) {
+async function installWrapper(pythonCommand: string, context: ExtensionContext) {
   const msg = 'Install/Upgrade "esbonio[lsp]"?';
   context.workspaceState;
 
@@ -195,7 +203,7 @@ async function installWrapper(context: ExtensionContext) {
   ret = await window.showQuickpick(['Yes', 'Cancel'], msg);
   if (ret === 0) {
     try {
-      await esbonioLsInstall(context);
+      await esbonioLsInstall(pythonCommand, context);
     } catch (e) {
       return;
     }
@@ -212,4 +220,26 @@ async function existsEnvEsbonio(pythonPath: string): Promise<boolean> {
   } catch (error) {
     return false;
   }
+}
+
+function detectPythonCommand(): string {
+  let res = '';
+
+  try {
+    which.sync('python3');
+    res = 'python3';
+    return res;
+  } catch (e) {
+    // noop
+  }
+
+  try {
+    which.sync('python');
+    res = 'python';
+    return res;
+  } catch (e) {
+    // noop
+  }
+
+  return res;
 }

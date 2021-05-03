@@ -10,23 +10,28 @@ import { ESBONIO_LS_VERSION } from './constant';
 
 const exec = util.promisify(child_process.exec);
 
-export async function esbonioLsInstall(context: ExtensionContext): Promise<void> {
+export async function esbonioLsInstall(pythonCommand: string, context: ExtensionContext): Promise<void> {
   const pathVenv = path.join(context.storagePath, 'esbonio', 'venv');
-  const pathPip = path.join(pathVenv, 'bin', 'pip');
+
+  let pathVenvPython = path.join(context.storagePath, 'esbonio', 'venv', 'bin', 'python');
+  if (process.platform === 'win32') {
+    pathVenvPython = path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python');
+  }
 
   const statusItem = window.createStatusBarItem(0, { progress: true });
-  statusItem.text = `Install esbonio[lsp] ...`;
+  statusItem.text = `Install esbonio[lsp]...`;
   statusItem.show();
 
   const installCmd =
-    `python3 -m venv ${pathVenv} && ` + `${pathPip} install -U pip 'esbonio[lsp]'==${ESBONIO_LS_VERSION}`;
+    `${pythonCommand} -m venv ${pathVenv} && ` +
+    `${pathVenvPython} -m pip install -U pip esbonio[lsp]==${ESBONIO_LS_VERSION}`;
 
   rimraf.sync(pathVenv);
   try {
-    window.showWarningMessage(`Install esbonio[lsp]...`);
+    window.showMessage(`Install esbonio[lsp]...`);
     await exec(installCmd);
     statusItem.hide();
-    window.showWarningMessage(`esbonio[lsp]: installed!`);
+    window.showMessage(`esbonio[lsp]: installed!`);
   } catch (error) {
     statusItem.hide();
     window.showErrorMessage(`esbonio[lsp]: install failed. | ${error}`);
