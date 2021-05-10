@@ -178,7 +178,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
+      if (client.serviceState !== 5) {
+        await client.stop();
+      }
       await installWrapper(pythonCommand, context);
+      client.start();
     })
   );
 
