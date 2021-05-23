@@ -134,7 +134,7 @@
           "scope": "window",
           "type": "string",
           "default": "",
-          "description": "Custom python path with esbonio[lsp] installed (Absolute path)"
+          "description": "Custom python path with esbonio installed (Absolute path)"
         },
         "esbonio.server.logLevel": {
           "scope": "application",

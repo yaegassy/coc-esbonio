@@ -77,7 +77,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     }
   }
 
-  // Install "esbonio[lsp]" if it does not exist.
+  // Install "esbonio" if it does not exist.
   if (!esbonioServerPythonPath) {
     const isRealpath = true;
     const builtinInstallPythonCommand = getPythonCommand(isRealpath);
@@ -89,7 +89,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     }
   }
 
-  // If "esbonio[lsp]" does not exist completely, terminate the process.
+  // If "esbonio" does not exist completely, terminate the process.
   // ----
   // If you cancel the installation.
   if (!esbonioServerPythonPath) {
@@ -197,7 +197,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 }
 
 async function installWrapper(pythonCommand: string, context: ExtensionContext) {
-  const msg = 'Install/Upgrade "esbonio[lsp]"?';
+  const msg = 'Install/Upgrade "esbonio"?';
   context.workspaceState;
 
   let ret = 0;

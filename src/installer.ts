@@ -19,22 +19,22 @@ export async function esbonioLsInstall(pythonCommand: string, context: Extension
   }
 
   const statusItem = window.createStatusBarItem(0, { progress: true });
-  statusItem.text = `Install esbonio[lsp]...`;
+  statusItem.text = `Install esbonio...`;
   statusItem.show();
 
   const installCmd =
     `${pythonCommand} -m venv ${pathVenv} && ` +
-    `${pathVenvPython} -m pip install -U pip esbonio[lsp]==${ESBONIO_LS_VERSION}`;
+    `${pathVenvPython} -m pip install -U pip esbonio==${ESBONIO_LS_VERSION}`;
 
   rimraf.sync(pathVenv);
   try {
-    window.showMessage(`Install esbonio[lsp]...`);
+    window.showMessage(`Install esbonio...`);
     await exec(installCmd);
     statusItem.hide();
-    window.showMessage(`esbonio[lsp]: installed!`);
+    window.showMessage(`esbonio: installed!`);
   } catch (error) {
     statusItem.hide();
-    window.showErrorMessage(`esbonio[lsp]: install failed. | ${error}`);
+    window.showErrorMessage(`esbonio: install failed. | ${error}`);
     throw new Error();
   }
 }
