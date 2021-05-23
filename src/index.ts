@@ -99,30 +99,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
 
-  const pythonArgs = [
-    '-m',
-    'esbonio',
-    '--cache-dir',
-    path.join(extensionStoragePath, 'sphinx'),
-    '--log-level',
-    extensionConfig.get<string>('server.logLevel', 'error'),
-  ];
-
-  if (extensionConfig.get<boolean>('server.hideSphinxOutput', false)) {
-    pythonArgs.push('--hide-sphinx-output');
-  }
-
-  const logFilters = extensionConfig.get<string[]>('server.logFilter', []);
-  if (logFilters) {
-    logFilters.forEach((filterName) => {
-      pythonArgs.push('--log-filter', filterName);
-    });
-  }
-
   const command = esbonioServerPythonPath;
   const serverOptions: ServerOptions = {
     command,
-    args: pythonArgs,
+    args: ['-m', 'esbonio'],
   };
 
   const clientOptions: LanguageClientOptions = {
@@ -132,6 +112,18 @@ export async function activate(context: ExtensionContext): Promise<void> {
       // MEMO: but coc-esbonio sets only rst.
       //{ scheme: 'file', language: 'python' },
     ],
+    initializationOptions: {
+      sphinx: {
+        srcDir: extensionConfig.get<string>('sphinx.srcDir'),
+        confDir: extensionConfig.get<string>('sphinx.confDir'),
+        buildDir: path.join(extensionStoragePath, 'sphinx')
+      },
+      server: {
+        logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
+        logFilter: extensionConfig.get<string[]>('server.logFilter', []),
+        hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false)
+      }
+    },
     outputChannelName: 'esbonio',
     middleware: {
       provideCompletionItem: async (
