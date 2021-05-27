@@ -68,6 +68,14 @@ You can also run the installation command manually.
 - `esbonio.languageServer.install`: Install/Upgrade Language Server
 - `esbonio.languageServer.restart`: Restart Language Server
 
+## Recommended setting
+
+If "lint" does not work properly, add the following setting to "vimrc/init.vim" and it may work correctly.
+
+```vim
+au FileType rst let b:coc_root_patterns = ['conf.py', '.git']
+```
+
 ## Other Vim plugins for sphinx
 
 - [stsewd/sphinx.nvim](https://github.com/stsewd/sphinx.nvim)
