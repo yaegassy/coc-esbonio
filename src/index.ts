@@ -55,7 +55,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   let pythonCommand = esbonioServerPythonPath;
   if (!pythonCommand) {
-    pythonCommand = detectPythonCommand();
+    pythonCommand = getPythonCommand();
   }
 
   if (!esbonioServerPythonPath) {
@@ -79,7 +79,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   // Install "esbonio[lsp]" if it does not exist.
   if (!esbonioServerPythonPath) {
-    await installWrapper(pythonCommand, context);
+    const isRealpath = true;
+    const builtinInstallPythonCommand = getPythonCommand(isRealpath);
+    await installWrapper(builtinInstallPythonCommand, context);
     if (process.platform === 'win32') {
       esbonioServerPythonPath = path.join(context.storagePath, 'esbonio', 'venv', 'Scripts', 'python.exe');
     } else {
@@ -178,10 +180,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
+      const isRealpath = true;
+      const builtinInstallPythonCommand = getPythonCommand(isRealpath);
+
       if (client.serviceState !== 5) {
         await client.stop();
       }
-      await installWrapper(pythonCommand, context);
+      await installWrapper(builtinInstallPythonCommand, context);
       client.start();
     })
   );
@@ -226,20 +231,24 @@ async function existsEnvEsbonio(pythonPath: string): Promise<boolean> {
   }
 }
 
-function detectPythonCommand(): string {
+function getPythonCommand(isRealpath?: boolean): string {
   let res = '';
 
   try {
-    which.sync('python3');
-    res = 'python3';
+    res = which.sync('python3');
+    if (isRealpath) {
+      res = fs.realpathSync(res);
+    }
     return res;
   } catch (e) {
     // noop
   }
 
   try {
-    which.sync('python');
-    res = 'python';
+    res = which.sync('python');
+    if (isRealpath) {
+      res = fs.realpathSync(res);
+    }
     return res;
   } catch (e) {
     // noop
