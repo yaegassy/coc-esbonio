@@ -28,6 +28,7 @@ import semver from 'semver';
 
 import { esbonioLsInstall } from './installer';
 import { EsbonioCodeActionProvider } from './action';
+import { EditorCommands } from './command';
 
 const exec = util.promisify(child_process.exec);
 
@@ -226,6 +227,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
   context.subscriptions.push(
     languages.registerCodeActionProvider([{ scheme: 'file', language: 'rst' }], codeActionProvider, 'esbonio')
   );
+
+  const editorCommand = new EditorCommands();
+  editorCommand.register(context);
 }
 
 async function installWrapper(pythonCommand: string, context: ExtensionContext) {
