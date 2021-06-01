@@ -13,6 +13,7 @@
     - (Build in the cache directory)
 - Code Action by client feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
+  - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
 
 ## Install
 
@@ -67,6 +68,16 @@ You can also run the installation command manually.
 
 - `esbonio.languageServer.install`: Install/Upgrade Language Server
 - `esbonio.languageServer.restart`: Restart Language Server
+
+## Code Actions
+
+- `Section builder (level1)`
+- `Section builder (level2)`
+- `Section builder (level3)`
+- `Insert Link (cursol)`
+- `Insert Inline Link (cursol)`
+- `Insert Link (line & range)`
+- `Insert Inline Link (line & range)`
 
 ## Recommended setting
 
