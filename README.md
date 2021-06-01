@@ -13,7 +13,7 @@
     - (Build in the cache directory)
 - Code Action by client feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
-  - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
+  - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/10)
 
 ## Install
 
