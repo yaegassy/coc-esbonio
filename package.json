@@ -1,7 +1,7 @@
 {
   "name": "coc-esbonio",
   "version": "0.4.5",
-  "esbonioLsVersion": "0.6.1",
+  "esbonioLsVersion": "0.6.2",
   "description": "esbonio ([Sphinx] Python Documentation Generator) language server extension for coc.nvim",
   "author": "yaegassy <yosstools@gmail.com>",
   "license": "MIT",
@@ -134,7 +134,7 @@
           "scope": "window",
           "type": "string",
           "default": "",
-          "description": "Custom python path with esbonio[lsp] installed (Absolute path)"
+          "description": "Custom python path with esbonio installed (Absolute path)"
         },
         "esbonio.server.logLevel": {
           "scope": "application",

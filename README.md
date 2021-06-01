@@ -26,7 +26,7 @@
 Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
 ```
 
-## Detect: esbonio[lsp]
+## Detect: esbonio
 
 1. `esbonio.server.pythonPath` setting
 1. Current python3 environment (e.g. venv or system global)
@@ -34,9 +34,9 @@ Plug 'yaegassy/coc-esbonio', {'do': 'yarn install --frozen-lockfile'}
 
 ## Bult-in install
 
-coc-esbonio allows you to create an extension-only "venv" and install "esbonio[lsp]".
+coc-esbonio allows you to create an extension-only "venv" and install "esbonio".
 
-The first time you use coc-esbonio, if esbonio[lsp] is not detected, you will be prompted to do a built-in installation.
+The first time you use coc-esbonio, if esbonio is not detected, you will be prompted to do a built-in installation.
 
 You can also run the installation command manually.
 
@@ -56,7 +56,7 @@ You can also run the installation command manually.
 - `esbonio.client.sectionCharacterLevel1`: Character to be used in the Section builder (level1) of the code action, default: `"="`,
 - `esbonio.client.sectionCharacterLevel2`: Character to be used in the Section builder (level2) of the code action, default: `"-"`,
 - `esbonio.client.sectionCharacterLevel3`: Character to be used in the Section builder (level3) of the code action, default: `"~"`,
-- `esbonio.server.pythonPath`: Custom python path with esbonio[lsp] installed (Absolute path), default: `""`
+- `esbonio.server.pythonPath`: Custom python path with esbonio installed (Absolute path), default: `""`
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`
 - `esbonio.server.hideSphinxOutput`: Hide Sphinx build output from the Language Server log, default: `false`
