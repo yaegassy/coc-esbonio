@@ -24,6 +24,8 @@ import util from 'util';
 
 import which from 'which';
 
+import semver from 'semver';
+
 import { esbonioLsInstall } from './installer';
 import { EsbonioCodeActionProvider } from './action';
 
@@ -99,10 +101,51 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
 
+  let initializationOptions = {};
+  let pythonArgs = ['-m', 'esbonio'];
+
+  const esbonioVersion = await getEsbonioVersion(esbonioServerPythonPath);
+  const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
+
+  if (requireInitializationOptions) {
+    initializationOptions = {
+      sphinx: {
+        srcDir: extensionConfig.get<string>('sphinx.srcDir'),
+        confDir: extensionConfig.get<string>('sphinx.confDir'),
+        buildDir: path.join(extensionStoragePath, 'sphinx'),
+      },
+      server: {
+        logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
+        logFilter: extensionConfig.get<string[]>('server.logFilter', []),
+        hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false),
+      },
+    };
+  } else {
+    pythonArgs = [
+      '-m',
+      'esbonio',
+      '--cache-dir',
+      path.join(extensionStoragePath, 'sphinx'),
+      '--log-level',
+      extensionConfig.get<string>('server.logLevel', 'error'),
+    ];
+
+    if (extensionConfig.get<boolean>('server.hideSphinxOutput', false)) {
+      pythonArgs.push('--hide-sphinx-output');
+    }
+
+    const logFilters = extensionConfig.get<string[]>('server.logFilter', []);
+    if (logFilters) {
+      logFilters.forEach((filterName) => {
+        pythonArgs.push('--log-filter', filterName);
+      });
+    }
+  }
+
   const command = esbonioServerPythonPath;
   const serverOptions: ServerOptions = {
     command,
-    args: ['-m', 'esbonio'],
+    args: pythonArgs,
   };
 
   const clientOptions: LanguageClientOptions = {
@@ -112,18 +155,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       // MEMO: but coc-esbonio sets only rst.
       //{ scheme: 'file', language: 'python' },
     ],
-    initializationOptions: {
-      sphinx: {
-        srcDir: extensionConfig.get<string>('sphinx.srcDir'),
-        confDir: extensionConfig.get<string>('sphinx.confDir'),
-        buildDir: path.join(extensionStoragePath, 'sphinx')
-      },
-      server: {
-        logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
-        logFilter: extensionConfig.get<string[]>('server.logFilter', []),
-        hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false)
-      }
-    },
+    initializationOptions,
     outputChannelName: 'esbonio',
     middleware: {
       provideCompletionItem: async (
@@ -247,4 +279,30 @@ function getPythonCommand(isRealpath?: boolean): string {
   }
 
   return res;
+}
+
+async function getEsbonioVersion(pythonPath: string): Promise<string> {
+  const checkCmd = `${pythonPath} -m esbonio --version`;
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { stdout, stderr } = await exec(checkCmd);
+    return stdout;
+  } catch (error) {
+    return '';
+  }
+}
+
+// MEMO: v0.6.2 or later
+//
+// Cli options like --log-level have been removed in favour of configuration
+// values.
+// The server's initial configuration should be passed in through the
+// initializationOptions field of the initialize request.
+function isRequireInitializationOptions(version: string): boolean {
+  try {
+    return semver.gte(version, '0.6.2');
+  } catch (e) {
+    return true;
+  }
 }
