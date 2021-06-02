@@ -10,7 +10,6 @@ async function getEOLSequence(): Promise<string> {
   const eol = '\n';
 
   const fileFormat = await workspace.nvim.getOption('fileformat');
-  window.showMessage(`${fileFormat}`);
   switch (fileFormat) {
     case 'unix':
       return '\n';

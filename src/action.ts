@@ -95,7 +95,6 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
         title: 'Insert Link (cursol)',
         command: {
           title: 'Insert Link (cursol)',
-          //command: 'esbonio.insert.link',
           command: EditorCommands.INSERT_LINK,
           arguments: [],
         },
@@ -105,7 +104,6 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
         title: 'Insert Inline Link (cursol)',
         command: {
           title: 'Insert Inline Link (cursol)',
-          //command: 'esbonio.insert.inlineLink',
           command: EditorCommands.INSERT_INLINE_LINK,
           arguments: [],
         },
@@ -122,7 +120,6 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
         title: 'Insert Link (line & range)',
         command: {
           title: 'Insert Link (line & range)',
-          //command: 'esbonio.insert.link',
           command: EditorCommands.INSERT_LINK,
           arguments: [range],
         },
@@ -132,7 +129,6 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
         title: 'Insert Inline Link (line & range)',
         command: {
           title: 'Insert Inline Link (line & range)',
-          //command: 'esbonio.insert.inlineLink',
           command: EditorCommands.INSERT_INLINE_LINK,
           arguments: [range],
         },
