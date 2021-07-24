@@ -76,8 +76,8 @@ You can also run the installation command manually.
 - `Section builder (level3)`
 - `Insert Link (cursol)`
 - `Insert Inline Link (cursol)`
-- `Insert Link (line & range)`
-- `Insert Inline Link (line & range)`
+- `Insert Link (selected)`
+- `Insert Inline Link (selected)`
 
 ## Recommended setting
 

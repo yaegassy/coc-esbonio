@@ -110,25 +110,25 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
       });
     }
 
-    /** Line & Range | Insert Link & Insert Inline Link */
+    /** Selected | Insert Link & Insert Inline Link */
     if (
       range.start.line === range.end.line &&
       range.start.character !== range.end.character &&
       !this.wholeRange(doc, range)
     ) {
       codeActions.push({
-        title: 'Insert Link (line & range)',
+        title: 'Insert Link (selected)',
         command: {
-          title: 'Insert Link (line & range)',
+          title: 'Insert Link (selected)',
           command: EditorCommands.INSERT_LINK,
           arguments: [range],
         },
       });
 
       codeActions.push({
-        title: 'Insert Inline Link (line & range)',
+        title: 'Insert Inline Link (selected)',
         command: {
-          title: 'Insert Inline Link (line & range)',
+          title: 'Insert Inline Link (selected)',
           command: EditorCommands.INSERT_INLINE_LINK,
           arguments: [range],
         },
