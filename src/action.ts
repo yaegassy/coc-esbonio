@@ -36,7 +36,7 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
     const doc = workspace.getDocument(document.uri);
 
     /** Line | Section builder (level1) */
-    if (range.start.line === range.end.line && range.start.character === 0) {
+    if (this.lineRange(range)) {
       const thisLineContent = doc.getline(range.start.line);
       const contentLength = multibyteLength(thisLineContent);
       const sectionLineString = sectionCharacterLevel1.repeat(contentLength) + '\n';
@@ -54,7 +54,7 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
     }
 
     /** Line | Section builder (level2) */
-    if (range.start.line === range.end.line && range.start.character === 0) {
+    if (this.lineRange(range)) {
       const thisLineContent = doc.getline(range.start.line);
       const contentLength = multibyteLength(thisLineContent);
       const sectionLineString = sectionCharacterLevel2.repeat(contentLength) + '\n';
@@ -72,7 +72,7 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
     }
 
     /** Line | Section builder (level3) */
-    if (range.start.line === range.end.line && range.start.character === 0) {
+    if (this.lineRange(range)) {
       const thisLineContent = doc.getline(range.start.line);
       const contentLength = multibyteLength(thisLineContent);
       const sectionLineString = sectionCharacterLevel3.repeat(contentLength) + '\n';
@@ -145,6 +145,13 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
       whole.start.character === range.start.character &&
       whole.end.line === range.end.line &&
       whole.end.character === whole.end.character
+    );
+  }
+
+  private lineRange(r: Range): boolean {
+    return (
+      (r.start.line + 1 === r.end.line && r.start.character === 0 && r.end.character === 0) ||
+      (r.start.line === r.end.line && r.start.character === 0)
     );
   }
 }
