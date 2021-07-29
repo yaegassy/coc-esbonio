@@ -71,6 +71,16 @@ You can also run the installation command manually.
 
 ## Code Actions
 
+**Example key mapping (Code Action related)**:
+
+```vim
+nmap <silent> ga <Plug>(coc-codeaction-line)
+xmap <silent> ga <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>a <Plug>(coc-codeaction-cursor)
+```
+
+**Actions**:
+
 - `Section builder (level1)`
 - `Section builder (level2)`
 - `Section builder (level3)`
