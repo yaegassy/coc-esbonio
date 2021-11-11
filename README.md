@@ -11,9 +11,15 @@
 - Diagnostics
   - The Language Server is able to catch some of the errors Sphinx outputs while building and publish them as diagnostic messages
     - (Build in the cache directory)
-- Code Action by client feature
+- Goto Definition
+  - The language server can look up the definition of certain role targets. Currently this is limited to just the `:ref:` and `:doc:` roles.
+- Code Action by client side feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
   - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/10)
+- Built-in installer by client side feature
+  - **See**:
+    - <https://github.com/yaegassy/coc-esbonio#detect-esbonio>
+    - <https://github.com/yaegassy/coc-esbonio#bult-in-install>
 
 ## Install
 
