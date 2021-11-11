@@ -57,6 +57,14 @@
     "workspaceContains:**/conf.py"
   ],
   "contributes": {
+    "rootPatterns": [
+      {
+        "filetype": "rst",
+        "patterns": [
+          "conf.py"
+        ]
+      }
+    ],
     "configuration": {
       "type": "object",
       "title": "coc-esbonio configuration",
