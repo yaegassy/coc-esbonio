@@ -89,14 +89,6 @@ nmap <silent> <leader>a <Plug>(coc-codeaction-cursor)
 - `Insert Link (selected)`
 - `Insert Inline Link (selected)`
 
-## Recommended setting
-
-If "lint" does not work properly, add the following setting to "vimrc/init.vim" and it may work correctly.
-
-```vim
-au FileType rst let b:coc_root_patterns = ['conf.py', '.git']
-```
-
 ## Other Vim plugins for sphinx
 
 - [stsewd/sphinx.nvim](https://github.com/stsewd/sphinx.nvim)
