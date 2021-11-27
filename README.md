@@ -8,6 +8,8 @@
 
 - Completion
   - The Language Server can offer auto complete suggestions in a variety of contexts
+- Document Symbols
+  - The language server implements [textDocument/documentSymbol](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentSymbol) which powers features like the “Outline” view in coc.nvim.
 - Diagnostics
   - The Language Server is able to catch some of the errors Sphinx outputs while building and publish them as diagnostic messages
     - (Build in the cache directory)
