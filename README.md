@@ -63,6 +63,7 @@ You can also run the installation command manually.
 - `esbonio.client.sectionCharacterLevel1`: Character to be used in the Section builder (level1) of the code action, default: `"="`,
 - `esbonio.client.sectionCharacterLevel2`: Character to be used in the Section builder (level2) of the code action, default: `"-"`,
 - `esbonio.client.sectionCharacterLevel3`: Character to be used in the Section builder (level3) of the code action, default: `"~"`,
+- `esbonio.server.enabled`: Enable/Disable the language server, default: `true`
 - `esbonio.server.pythonPath`: Custom python path with esbonio installed (Absolute path), default: `""`
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`

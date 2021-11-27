@@ -141,6 +141,12 @@
           ],
           "description": "Character to be used in the Section builder (level3) of the code action"
         },
+        "esbonio.server.enabled": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/Disable the language server"
+        },
         "esbonio.server.pythonPath": {
           "scope": "window",
           "type": "string",
