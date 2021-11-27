@@ -179,6 +179,13 @@
           "default": false,
           "description": "Hide Sphinx build output from the Language Server log."
         },
+        "esbonio.sphinx.buildDir": {
+          "scope": "window",
+          "type": "string",
+          "default": null,
+          "description": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local _build/ directory.",
+          "markdownDescription": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory."
+        },
         "esbonio.sphinx.confDir": {
           "scope": "window",
           "type": "string",

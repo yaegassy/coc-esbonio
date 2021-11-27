@@ -68,6 +68,7 @@ You can also run the installation command manually.
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`
 - `esbonio.server.hideSphinxOutput`: Hide Sphinx build output from the Language Server log, default: `false`
+- `esbonio.sphinx.buildDir`: The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory, default: `null`
 - `esbonio.sphinx.confDir`: The Language Server should be able to automatically find the folder containing your project's 'conf.py' file. However this setting can be used to force the Language Server to use a particular directory if required, default: `""`
 - `esbonio.sphinx.srcDir`: The directory containing your rst source files. By default the Language Server will assume this is the same as `#esbonio.sphinx.srcDir#` but this opton can override this if necessary, default: `""`
 
