@@ -201,25 +201,32 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const client = new LanguageClient('esbonio', 'Esbonio Language Server', serverOptions, clientOptions);
 
-  subscriptions.push(services.registLanguageClient(client));
+  const isServerEnabled = extensionConfig.get('server.enabled');
+  if (isServerEnabled) {
+    subscriptions.push(services.registLanguageClient(client));
+  }
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
-      const isRealpath = true;
-      const builtinInstallPythonCommand = getPythonCommand(isRealpath);
+      if (isServerEnabled) {
+        const isRealpath = true;
+        const builtinInstallPythonCommand = getPythonCommand(isRealpath);
 
-      if (client.serviceState !== 5) {
-        await client.stop();
+        if (client.serviceState !== 5) {
+          await client.stop();
+        }
+        await installWrapper(builtinInstallPythonCommand, context);
+        client.start();
       }
-      await installWrapper(builtinInstallPythonCommand, context);
-      client.start();
     })
   );
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.restart', async () => {
-      await client.stop();
-      client.start();
+      if (isServerEnabled) {
+        await client.stop();
+        client.start();
+      }
     })
   );
 
