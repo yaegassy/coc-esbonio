@@ -109,11 +109,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
 
   if (requireInitializationOptions) {
+    let buildDir = extensionConfig.get<string>('sphinx.buildDir', '');
+    if (!buildDir) {
+      buildDir = path.join(extensionStoragePath, 'sphinx');
+    }
+
     initializationOptions = {
       sphinx: {
         srcDir: extensionConfig.get<string>('sphinx.srcDir'),
         confDir: extensionConfig.get<string>('sphinx.confDir'),
-        buildDir: path.join(extensionStoragePath, 'sphinx'),
+        buildDir: buildDir,
       },
       server: {
         logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
