@@ -109,11 +109,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
 
   if (requireInitializationOptions) {
+    let buildDir = extensionConfig.get<string>('sphinx.buildDir', '');
+    if (!buildDir) {
+      buildDir = path.join(extensionStoragePath, 'sphinx');
+    }
+
     initializationOptions = {
       sphinx: {
         srcDir: extensionConfig.get<string>('sphinx.srcDir'),
         confDir: extensionConfig.get<string>('sphinx.confDir'),
-        buildDir: path.join(extensionStoragePath, 'sphinx'),
+        buildDir: buildDir,
       },
       server: {
         logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
@@ -201,25 +206,32 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const client = new LanguageClient('esbonio', 'Esbonio Language Server', serverOptions, clientOptions);
 
-  subscriptions.push(services.registLanguageClient(client));
+  const isServerEnabled = extensionConfig.get('server.enabled');
+  if (isServerEnabled) {
+    subscriptions.push(services.registLanguageClient(client));
+  }
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
-      const isRealpath = true;
-      const builtinInstallPythonCommand = getPythonCommand(isRealpath);
+      if (isServerEnabled) {
+        const isRealpath = true;
+        const builtinInstallPythonCommand = getPythonCommand(isRealpath);
 
-      if (client.serviceState !== 5) {
-        await client.stop();
+        if (client.serviceState !== 5) {
+          await client.stop();
+        }
+        await installWrapper(builtinInstallPythonCommand, context);
+        client.start();
       }
-      await installWrapper(builtinInstallPythonCommand, context);
-      client.start();
     })
   );
 
   subscriptions.push(
     commands.registerCommand('esbonio.languageServer.restart', async () => {
-      await client.stop();
-      client.start();
+      if (isServerEnabled) {
+        await client.stop();
+        client.start();
+      }
     })
   );
 

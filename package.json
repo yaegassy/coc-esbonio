@@ -1,7 +1,7 @@
 {
   "name": "coc-esbonio",
   "version": "0.6.1",
-  "esbonioLsVersion": "0.7.0",
+  "esbonioLsVersion": "0.8.0",
   "description": "esbonio ([Sphinx] Python Documentation Generator) language server extension for coc.nvim",
   "author": "yaegassy <yosstools@gmail.com>",
   "license": "MIT",
@@ -12,6 +12,8 @@
     "neovim",
     "python",
     "sphinx",
+    "documentation",
+    "lsp",
     "linter",
     "restructuredtext"
   ],
@@ -139,11 +141,17 @@
           ],
           "description": "Character to be used in the Section builder (level3) of the code action"
         },
+        "esbonio.server.enabled": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Enable/Disable the language server"
+        },
         "esbonio.server.pythonPath": {
           "scope": "window",
           "type": "string",
           "default": "",
-          "description": "Custom python path with esbonio installed (Absolute path)"
+          "description": "The path to the Python interpreter to use when running the Langague Server.\n\nBy default this extension will try to use the interpreter configured via the Python Extension. If you do not use the Python Extension or you wish to use a different environment, then this option can be used to override the default behavior."
         },
         "esbonio.server.logLevel": {
           "scope": "application",
@@ -171,6 +179,13 @@
           "default": false,
           "description": "Hide Sphinx build output from the Language Server log."
         },
+        "esbonio.sphinx.buildDir": {
+          "scope": "window",
+          "type": "string",
+          "default": null,
+          "description": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local _build/ directory.",
+          "markdownDescription": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory."
+        },
         "esbonio.sphinx.confDir": {
           "scope": "window",
           "type": "string",
@@ -181,7 +196,8 @@
           "scope": "window",
           "type": "string",
           "default": "",
-          "markdownDescription": "The directory containing your rst source files. By default the Language Server will assume this is the same as `#esbonio.sphinx.srcDir#` but this opton can override this if necessary."
+          "description": "The directory containing your rst source files. By default the Language Server will assume this is the same as `esbonio.sphinx.confDir` but this opton can override this if necessary.",
+          "markdownDescription": "The directory containing your rst source files. By default the Language Server will assume this is the same as `#esbonio.sphinx.confDir#` but this opton can override this if necessary."
         }
       }
     },
