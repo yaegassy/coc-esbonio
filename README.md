@@ -59,7 +59,6 @@ You can also run the installation command manually.
 ## Configuration options
 
 - `esbonio.enable`: Enable coc-esbonio extension, default: `true`
-- `esbonio.enableFixDirectiveCompletion`: Enable fix patch for `Directive` completion issue, default: `true`
 - `esbonio.client.sectionCharacterLevel1`: Character to be used in the Section builder (level1) of the code action, default: `"="`,
 - `esbonio.client.sectionCharacterLevel2`: Character to be used in the Section builder (level2) of the code action, default: `"-"`,
 - `esbonio.client.sectionCharacterLevel3`: Character to be used in the Section builder (level3) of the code action, default: `"~"`,
