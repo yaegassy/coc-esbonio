@@ -151,7 +151,7 @@
           "scope": "window",
           "type": "string",
           "default": "",
-          "description": "Custom python path with esbonio installed (Absolute path)"
+          "description": "The path to the Python interpreter to use when running the Langague Server.\n\nBy default this extension will try to use the interpreter configured via the Python Extension. If you do not use the Python Extension or you wish to use a different environment, then this option can be used to override the default behavior."
         },
         "esbonio.server.logLevel": {
           "scope": "application",
