@@ -7,14 +7,13 @@
 ## Features
 
 - Completion
-  - The Language Server can offer auto complete suggestions in a variety of contexts
+  - The language server implements [textDocument/completion](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_completion) and can offer suggestions in a variety of contexts.
 - Document Symbols
   - The language server implements [textDocument/documentSymbol](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentSymbol) which powers features like the “Outline” view in coc.nvim.
 - Diagnostics
-  - The Language Server is able to catch some of the errors Sphinx outputs while building and publish them as diagnostic messages
-    - (Build in the cache directory)
+  - Using [textDocument/publishDiagnostics](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_publishDiagnostics) the language server is able to report Sphinx errors that are reported during builds.
 - Goto Definition
-  - The language server can look up the definition of certain role targets. Currently this is limited to just the `:ref:` and `:doc:` roles.
+  - The language server implements [textDocument/definition](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition) to provide the location of objects linked to by certain roles. Currently only the `:ref:` and `:doc:` roles are supported.
 - Code Action by client side feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
   - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/10)
