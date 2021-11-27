@@ -12,6 +12,8 @@
     "neovim",
     "python",
     "sphinx",
+    "documentation",
+    "lsp",
     "linter",
     "restructuredtext"
   ],
