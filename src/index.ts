@@ -148,6 +148,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
     }
   }
 
+  if (semver.gte(esbonioVersion, '0.9.0')) {
+    extensionConfig.get<string[]>('server.includedModules', []).forEach((mod) => {
+      pythonArgs.push('--include', mod);
+    });
+
+    extensionConfig.get<string[]>('server.excludedModules', []).forEach((mod) => {
+      pythonArgs.push('--exclude', mod);
+    });
+  }
+
   const command = esbonioServerPythonPath;
   const serverOptions: ServerOptions = {
     command,
