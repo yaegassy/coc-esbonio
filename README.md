@@ -49,7 +49,7 @@ The first time you use coc-esbonio, if esbonio is not detected, you will be prom
 You can also run the installation command manually.
 
 ```vim
-:CocComannd esbonio.languageServer.install
+:CocCommand esbonio.languageServer.install
 ```
 
 ## Activation Events
