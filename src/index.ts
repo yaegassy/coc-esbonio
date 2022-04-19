@@ -118,6 +118,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
       sphinx: {
         srcDir: extensionConfig.get<string>('sphinx.srcDir'),
         confDir: extensionConfig.get<string>('sphinx.confDir'),
+        forceFullBuild: getConfigSphinxForceFullBuild(esbonioVersion),
+        numJobs: getConfigSphinxNumJobs(esbonioVersion) === 0 ? 'auto' : getConfigSphinxNumJobs(esbonioVersion),
         buildDir: buildDir,
       },
       server: {
@@ -330,5 +332,27 @@ function isRequireInitializationOptions(version: string): boolean {
     return semver.gte(version, '0.6.2');
   } catch (e) {
     return true;
+  }
+}
+
+// MEMO: v0.11.0 or later
+function getConfigSphinxForceFullBuild(version: string): boolean | undefined {
+  try {
+    if (semver.gte(version, '0.11.0')) {
+      return workspace.getConfiguration('esbonio').get<boolean>('sphinx.forceFullBuild', true);
+    }
+  } catch (e) {
+    return undefined;
+  }
+}
+
+// MEMO: v0.11.0 or later
+function getConfigSphinxNumJobs(version: string): number | undefined {
+  try {
+    if (semver.gte(version, '0.11.0')) {
+      return workspace.getConfiguration('esbonio').get<number>('sphinx.numJobs', 0);
+    }
+  } catch (e) {
+    return undefined;
   }
 }
