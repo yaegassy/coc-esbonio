@@ -12,23 +12,20 @@ import {
   ProvideCompletionItemsSignature,
   ServerOptions,
   services,
-  workspace,
+  ServiceStat,
   window,
+  workspace,
 } from 'coc.nvim';
 
+import child_process from 'child_process';
 import fs from 'fs';
 import path from 'path';
-
-import child_process from 'child_process';
-import util from 'util';
-
-import which from 'which';
-
 import semver from 'semver';
-
-import { esbonioLsInstall } from './installer';
+import util from 'util';
+import which from 'which';
 import { EsbonioCodeActionProvider } from './action';
 import { EditorCommands } from './command';
+import { esbonioLsInstall } from './installer';
 
 const exec = util.promisify(child_process.exec);
 
@@ -229,7 +226,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         const isRealpath = true;
         const builtinInstallPythonCommand = getPythonCommand(isRealpath);
 
-        if (client.serviceState !== 5) {
+        if (client.serviceState !== ServiceStat.Stopped) {
           await client.stop();
         }
         await installWrapper(builtinInstallPythonCommand, context);
@@ -258,11 +255,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 async function installWrapper(pythonCommand: string, context: ExtensionContext) {
   const msg = 'Install/Upgrade "esbonio"?';
-  context.workspaceState;
-
-  let ret = 0;
-  ret = await window.showQuickpick(['Yes', 'Cancel'], msg);
-  if (ret === 0) {
+  const ret = await window.showPrompt(msg);
+  if (ret) {
     try {
       await esbonioLsInstall(pythonCommand, context);
     } catch (e) {
