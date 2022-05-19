@@ -55,8 +55,7 @@
     "which": "^2.0.2"
   },
   "activationEvents": [
-    "onLanguage:rst",
-    "workspaceContains:**/conf.py"
+    "onLanguage:rst"
   ],
   "contributes": {
     "configuration": {
