@@ -26,7 +26,7 @@ import util from 'util';
 import which from 'which';
 import { EsbonioCodeActionProvider } from './action';
 import { EditorCommands } from './command';
-import { getConfigServerEnabledInPyFiles } from './config';
+import { getConfigServerEnabledInPyFiles, getConfigServerStartupModule } from './config';
 import { esbonioLsInstall } from './installer';
 
 const exec = util.promisify(child_process.exec);
@@ -102,7 +102,14 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
 
   let initializationOptions = {};
-  let pythonArgs = ['-m', 'esbonio'];
+  let pythonArgs: string[] = [];
+
+  const startupModule = getConfigServerStartupModule();
+  if (startupModule.endsWith('.py') || startupModule.includes('/') || startupModule.includes('\\')) {
+    pythonArgs.push(startupModule);
+  } else {
+    pythonArgs.push('-m', startupModule);
+  }
 
   const esbonioVersion = await getEsbonioVersion(esbonioServerPythonPath);
   const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
@@ -223,7 +230,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const isServerEnabled = extensionConfig.get('server.enabled');
   if (isServerEnabled) {
-    subscriptions.push(services.registLanguageClient(client));
+    client.start();
   }
 
   subscriptions.push(
