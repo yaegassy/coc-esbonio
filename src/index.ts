@@ -62,7 +62,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
   // 1. esbonio.server.pythonPath setting
   // 2. Current python3 environment (e.g. venv and system global)
   // 3. builtin venv python
-  ////let esbonioServerPythonPath = extensionConfig.get('server.pythonPath', '');
   let esbonioServerPythonPath = getConfigServerPythonPath();
   if (esbonioServerPythonPath && !(await existsEnvEsbonio(esbonioServerPythonPath))) {
     window.showErrorMessage(`Exit, because "esbonio" does not exist in your "esbonio.server.pythonPath" setting`);
@@ -113,7 +112,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
     return;
   }
 
-  ////const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
   const isFixDirectiveCompletion = getConfigEnableFixDirectiveCompletion();
 
   let initializationOptions = {};
@@ -130,7 +128,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
 
   if (requireInitializationOptions) {
-    ////let buildDir = extensionConfig.get<string>('sphinx.buildDir', '');
     let buildDir = getConfigSphinxBuildDir();
     if (!buildDir) {
       buildDir = path.join(extensionStoragePath, 'sphinx');
@@ -138,20 +135,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     initializationOptions = {
       sphinx: {
-        ////srcDir: extensionConfig.get<string>('sphinx.srcDir'),
         srcDir: getConfigSphinxSrcDir(),
-        ////confDir: extensionConfig.get<string>('sphinx.confDir'),
         confDir: getConfigSphinxConfDir(),
         forceFullBuild: getConfigSphinxForceFullBuild(esbonioVersion),
         numJobs: getConfigSphinxNumJobs(esbonioVersion) === 0 ? 'auto' : getConfigSphinxNumJobs(esbonioVersion),
         buildDir: buildDir,
       },
       server: {
-        ////logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
         logLevel: getConfigServerLogLevel(),
-        ////logFilter: extensionConfig.get<string[]>('server.logFilter', []),
         logFilter: getConfigServerLogFilter(),
-        ////hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false),
         hideSphinxOutput: getConfigServerHidSphinxOutput(),
       },
     };
@@ -162,7 +154,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
       '--cache-dir',
       path.join(extensionStoragePath, 'sphinx'),
       '--log-level',
-      ////extensionConfig.get<string>('server.logLevel', 'error'),
       getConfigServerLogLevel(),
     ];
 
@@ -170,7 +161,6 @@ export async function activate(context: ExtensionContext): Promise<void> {
       pythonArgs.push('--hide-sphinx-output');
     }
 
-    ////const logFilters = extensionConfig.get<string[]>('server.logFilter', []);
     const logFilters = getConfigServerLogFilter();
     if (logFilters) {
       logFilters.forEach((filterName) => {
@@ -180,12 +170,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   if (semver.gte(esbonioVersion, '0.9.0')) {
-    ////extensionConfig.get<string[]>('server.includedModules', []).forEach((mod) => {
     getConfigServerIncludedModules().forEach((mod) => {
       pythonArgs.push('--include', mod);
     });
 
-    ////extensionConfig.get<string[]>('server.excludedModules', []).forEach((mod) => {
     getConfigServerExcludedModules().forEach((mod) => {
       pythonArgs.push('--exclude', mod);
     });
