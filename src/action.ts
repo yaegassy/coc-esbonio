@@ -5,12 +5,17 @@ import {
   Document,
   Position,
   Range,
-  TextEdit,
   TextDocument,
+  TextEdit,
   workspace,
 } from 'coc.nvim';
 
 import { EditorCommands } from './command';
+import {
+  getConfigClientSectionCharacterLevel1,
+  getConfigClientSectionCharacterLevel2,
+  getConfigClientSectionCharacterLevel3,
+} from './config';
 import { multibyteLength } from './util';
 
 export class EsbonioCodeActionProvider implements CodeActionProvider {
@@ -22,15 +27,13 @@ export class EsbonioCodeActionProvider implements CodeActionProvider {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async provideCodeActions(document: TextDocument, range: Range, context: CodeActionContext) {
-    const extensionConfig = workspace.getConfiguration('esbonio');
-
     // MEMO:
     // -----
     // Use the recommended section character from
     // http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html#sections,
-    const sectionCharacterLevel1 = extensionConfig.get<string>('client.sectionCharacterLevel1', '=');
-    const sectionCharacterLevel2 = extensionConfig.get<string>('client.sectionCharacterLevel2', '-');
-    const sectionCharacterLevel3 = extensionConfig.get<string>('client.sectionCharacterLevel3', '~');
+    const sectionCharacterLevel1 = getConfigClientSectionCharacterLevel1();
+    const sectionCharacterLevel2 = getConfigClientSectionCharacterLevel2();
+    const sectionCharacterLevel3 = getConfigClientSectionCharacterLevel3();
 
     const codeActions: CodeAction[] = [];
     const doc = workspace.getDocument(document.uri);

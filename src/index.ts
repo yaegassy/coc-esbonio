@@ -12,7 +12,6 @@ import {
   Position,
   ProvideCompletionItemsSignature,
   ServerOptions,
-  services,
   ServiceStat,
   window,
   workspace,
@@ -26,16 +25,30 @@ import util from 'util';
 import which from 'which';
 import { EsbonioCodeActionProvider } from './action';
 import { EditorCommands } from './command';
-import { getConfigServerEnabledInPyFiles, getConfigServerStartupModule } from './config';
+import {
+  getConfigEnableFixDirectiveCompletion,
+  getConfigEsbonioEnable,
+  getConfigServerEnabled,
+  getConfigServerEnabledInPyFiles,
+  getConfigServerExcludedModules,
+  getConfigServerHidSphinxOutput,
+  getConfigServerIncludedModules,
+  getConfigServerLogFilter,
+  getConfigServerLogLevel,
+  getConfigServerPythonPath,
+  getConfigServerStartupModule,
+  getConfigSphinxBuildDir,
+  getConfigSphinxConfDir,
+  getConfigSphinxForceFullBuild,
+  getConfigSphinxNumJobs,
+  getConfigSphinxSrcDir,
+} from './config';
 import { esbonioLsInstall } from './installer';
 
 const exec = util.promisify(child_process.exec);
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  const { subscriptions } = context;
-  const extensionConfig = workspace.getConfiguration('esbonio');
-  const isEnable = extensionConfig.get<boolean>('enable', true);
-  if (!isEnable) return;
+  if (!getConfigEsbonioEnable()) return;
 
   const extensionStoragePath = context.storagePath;
   if (!fs.existsSync(extensionStoragePath)) {
@@ -49,7 +62,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
   // 1. esbonio.server.pythonPath setting
   // 2. Current python3 environment (e.g. venv and system global)
   // 3. builtin venv python
-  let esbonioServerPythonPath = extensionConfig.get('server.pythonPath', '');
+  ////let esbonioServerPythonPath = extensionConfig.get('server.pythonPath', '');
+  let esbonioServerPythonPath = getConfigServerPythonPath();
   if (esbonioServerPythonPath && !(await existsEnvEsbonio(esbonioServerPythonPath))) {
     window.showErrorMessage(`Exit, because "esbonio" does not exist in your "esbonio.server.pythonPath" setting`);
     return;
@@ -99,7 +113,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
     return;
   }
 
-  const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
+  ////const isFixDirectiveCompletion = extensionConfig.get<boolean>('enableFixDirectiveCompletion', true);
+  const isFixDirectiveCompletion = getConfigEnableFixDirectiveCompletion();
 
   let initializationOptions = {};
   let pythonArgs: string[] = [];
@@ -115,23 +130,29 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const requireInitializationOptions = isRequireInitializationOptions(esbonioVersion);
 
   if (requireInitializationOptions) {
-    let buildDir = extensionConfig.get<string>('sphinx.buildDir', '');
+    ////let buildDir = extensionConfig.get<string>('sphinx.buildDir', '');
+    let buildDir = getConfigSphinxBuildDir();
     if (!buildDir) {
       buildDir = path.join(extensionStoragePath, 'sphinx');
     }
 
     initializationOptions = {
       sphinx: {
-        srcDir: extensionConfig.get<string>('sphinx.srcDir'),
-        confDir: extensionConfig.get<string>('sphinx.confDir'),
+        ////srcDir: extensionConfig.get<string>('sphinx.srcDir'),
+        srcDir: getConfigSphinxSrcDir(),
+        ////confDir: extensionConfig.get<string>('sphinx.confDir'),
+        confDir: getConfigSphinxConfDir(),
         forceFullBuild: getConfigSphinxForceFullBuild(esbonioVersion),
         numJobs: getConfigSphinxNumJobs(esbonioVersion) === 0 ? 'auto' : getConfigSphinxNumJobs(esbonioVersion),
         buildDir: buildDir,
       },
       server: {
-        logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
-        logFilter: extensionConfig.get<string[]>('server.logFilter', []),
-        hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false),
+        ////logLevel: extensionConfig.get<string>('server.logLevel', 'error'),
+        logLevel: getConfigServerLogLevel(),
+        ////logFilter: extensionConfig.get<string[]>('server.logFilter', []),
+        logFilter: getConfigServerLogFilter(),
+        ////hideSphinxOutput: extensionConfig.get<boolean>('server.hideSphinxOutput', false),
+        hideSphinxOutput: getConfigServerHidSphinxOutput(),
       },
     };
   } else {
@@ -141,14 +162,16 @@ export async function activate(context: ExtensionContext): Promise<void> {
       '--cache-dir',
       path.join(extensionStoragePath, 'sphinx'),
       '--log-level',
-      extensionConfig.get<string>('server.logLevel', 'error'),
+      ////extensionConfig.get<string>('server.logLevel', 'error'),
+      getConfigServerLogLevel(),
     ];
 
-    if (extensionConfig.get<boolean>('server.hideSphinxOutput', false)) {
+    if (getConfigServerHidSphinxOutput()) {
       pythonArgs.push('--hide-sphinx-output');
     }
 
-    const logFilters = extensionConfig.get<string[]>('server.logFilter', []);
+    ////const logFilters = extensionConfig.get<string[]>('server.logFilter', []);
+    const logFilters = getConfigServerLogFilter();
     if (logFilters) {
       logFilters.forEach((filterName) => {
         pythonArgs.push('--log-filter', filterName);
@@ -157,11 +180,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   if (semver.gte(esbonioVersion, '0.9.0')) {
-    extensionConfig.get<string[]>('server.includedModules', []).forEach((mod) => {
+    ////extensionConfig.get<string[]>('server.includedModules', []).forEach((mod) => {
+    getConfigServerIncludedModules().forEach((mod) => {
       pythonArgs.push('--include', mod);
     });
 
-    extensionConfig.get<string[]>('server.excludedModules', []).forEach((mod) => {
+    ////extensionConfig.get<string[]>('server.excludedModules', []).forEach((mod) => {
+    getConfigServerExcludedModules().forEach((mod) => {
       pythonArgs.push('--exclude', mod);
     });
   }
@@ -228,12 +253,12 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
   const client = new LanguageClient('esbonio', 'Esbonio Language Server', serverOptions, clientOptions);
 
-  const isServerEnabled = extensionConfig.get('server.enabled');
+  const isServerEnabled = getConfigServerEnabled();
   if (isServerEnabled) {
     client.start();
   }
 
-  subscriptions.push(
+  context.subscriptions.push(
     commands.registerCommand('esbonio.languageServer.install', async () => {
       if (isServerEnabled) {
         const isRealpath = true;
@@ -248,7 +273,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     })
   );
 
-  subscriptions.push(
+  context.subscriptions.push(
     commands.registerCommand('esbonio.languageServer.restart', async () => {
       if (isServerEnabled) {
         await client.stop();
@@ -339,27 +364,5 @@ function isRequireInitializationOptions(version: string): boolean {
     return semver.gte(version, '0.6.2');
   } catch (e) {
     return true;
-  }
-}
-
-// MEMO: v0.11.0 or later
-function getConfigSphinxForceFullBuild(version: string): boolean | undefined {
-  try {
-    if (semver.gte(version, '0.11.0')) {
-      return workspace.getConfiguration('esbonio').get<boolean>('sphinx.forceFullBuild', true);
-    }
-  } catch (e) {
-    return undefined;
-  }
-}
-
-// MEMO: v0.11.0 or later
-function getConfigSphinxNumJobs(version: string): number | undefined {
-  try {
-    if (semver.gte(version, '0.11.0')) {
-      return workspace.getConfiguration('esbonio').get<number>('sphinx.numJobs', 0);
-    }
-  } catch (e) {
-    return undefined;
   }
 }
