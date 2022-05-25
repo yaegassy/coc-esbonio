@@ -52,6 +52,10 @@ You can also run the installation command manually.
 :CocCommand esbonio.languageServer.install
 ```
 
+## TIPS
+
+esbonio's language server can also handle python file docstrings. `coc-esbonio` will activate the extension when the `rst` file is opened. If you want `coc-esbonio` to work with `python` file as well, you must first open the `rst` file.
+
 ## Configuration options
 
 - `esbonio.enable`: Enable coc-esbonio extension, default: `true`
@@ -59,7 +63,7 @@ You can also run the installation command manually.
 - `esbonio.client.sectionCharacterLevel2`: Character to be used in the Section builder (level2) of the code action, default: `"-"`,
 - `esbonio.client.sectionCharacterLevel3`: Character to be used in the Section builder (level3) of the code action, default: `"~"`,
 - `esbonio.server.enabled`: Enable/Disable the language server, default: `true`
-- `esbonio.server.enabledInPyFiles`: Enable/Disable the language server in Python files, default: `false`
+- `esbonio.server.enabledInPyFiles`: Enable/Disable the language server in Python files, default: `true`
 - `esbonio.server.startupModule`: The module (or script) to use to launch the server, default: `esbonio`
 - `esbonio.server.excludedModules`: A list of modules to exclude from the server's configuration, default: `[]`
 - `esbonio.server.includedModules`: A list of additional modules to include in the server's configuration, default: `[]`
@@ -111,10 +115,6 @@ nmap <silent> <leader>a <Plug>(coc-codeaction-cursor)
 - `Insert Inline Link (cursol)`
 - `Insert Link (selected)`
 - `Insert Inline Link (selected)`
-
-## Other Vim plugins for sphinx
-
-- [stsewd/sphinx.nvim](https://github.com/stsewd/sphinx.nvim)
 
 ## Thanks
 

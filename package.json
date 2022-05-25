@@ -141,7 +141,7 @@
         "esbonio.server.enabledInPyFiles": {
           "scope": "window",
           "type": "boolean",
-          "default": false,
+          "default": true,
           "description": "Enable/Disable the language server in Python files."
         },
         "esbonio.server.startupModule": {

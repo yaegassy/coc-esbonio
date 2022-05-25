@@ -4,6 +4,7 @@ import {
   CompletionContext,
   CompletionItem,
   CompletionList,
+  DocumentSelector,
   ExtensionContext,
   LanguageClient,
   LanguageClientOptions,
@@ -25,6 +26,7 @@ import util from 'util';
 import which from 'which';
 import { EsbonioCodeActionProvider } from './action';
 import { EditorCommands } from './command';
+import { getConfigServerEnabledInPyFiles } from './config';
 import { esbonioLsInstall } from './installer';
 
 const exec = util.promisify(child_process.exec);
@@ -163,13 +165,17 @@ export async function activate(context: ExtensionContext): Promise<void> {
     args: pythonArgs,
   };
 
+  const documentSelector: DocumentSelector = [
+    { scheme: 'file', language: 'rst' },
+    { scheme: 'file', language: 'restructuredtext' },
+  ];
+
+  if (getConfigServerEnabledInPyFiles()) {
+    documentSelector.push({ scheme: 'file', language: 'python' });
+  }
+
   const clientOptions: LanguageClientOptions = {
-    documentSelector: [
-      { scheme: 'file', language: 'rst' },
-      // MEMO: In esbonio's original VSCode extension, python is also set as a documentSelector
-      // MEMO: but coc-esbonio sets only rst.
-      //{ scheme: 'file', language: 'python' },
-    ],
+    documentSelector,
     initializationOptions,
     outputChannelName: 'esbonio',
     middleware: {
