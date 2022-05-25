@@ -28,10 +28,10 @@ export async function esbonioLsInstall(pythonCommand: string, context: Extension
 
   rimraf.sync(pathVenv);
   try {
-    window.showMessage(`Install esbonio...`);
+    window.showInformationMessage(`Install esbonio...`);
     await exec(installCmd);
     statusItem.hide();
-    window.showMessage(`esbonio: installed!`);
+    window.showInformationMessage(`esbonio: installed!`);
   } catch (error) {
     statusItem.hide();
     window.showErrorMessage(`esbonio: install failed. | ${error}`);
