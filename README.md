@@ -52,11 +52,6 @@ You can also run the installation command manually.
 :CocCommand esbonio.languageServer.install
 ```
 
-## Activation Events
-
-- `"onLanguage:rst"`
-- `"workspaceContains:**/conf.py"`
-
 ## Configuration options
 
 - `esbonio.enable`: Enable coc-esbonio extension, default: `true`
