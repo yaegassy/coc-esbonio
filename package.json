@@ -138,11 +138,17 @@
           "default": true,
           "description": "Enable/Disable the language server"
         },
-        "esbonio.server.pythonPath": {
+        "esbonio.server.enabledInPyFiles": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Enable/Disable the language server in Python files."
+        },
+        "esbonio.server.startupModule": {
           "scope": "window",
           "type": "string",
-          "default": "",
-          "description": "The path to the Python interpreter to use when running the Langague Server.\n\nBy default this extension will try to use the interpreter configured via the Python Extension. If you do not use the Python Extension or you wish to use a different environment, then this option can be used to override the default behavior."
+          "default": "esbonio",
+          "description": "The module (or script) to use to launch the server."
         },
         "esbonio.server.excludedModules": {
           "scope": "window",
@@ -182,11 +188,18 @@
           },
           "description": "A list of logger names to limit output from"
         },
+        "esbonio.server.pythonPath": {
+          "scope": "window",
+          "type": "string",
+          "default": "",
+          "description": "The path to the Python interpreter to use when running the Langague Server.\n\nBy default this extension will try to use the interpreter configured via the Python Extension. If you do not use the Python Extension or you wish to use a different environment, then this option can be used to override the default behavior."
+        },
         "esbonio.server.hideSphinxOutput": {
           "scope": "application",
           "type": "boolean",
           "default": false,
-          "description": "Hide Sphinx build output from the Language Server log."
+          "description": "Hide Sphinx build output from the Language Server log.",
+          "deprecationMessage": "This option will be removed when the language server reaches v1.0. The esbonio.sphinx.quiet and esbonio.sphinx.silent options should be used instead."
         },
         "esbonio.sphinx.buildDir": {
           "scope": "window",
@@ -195,11 +208,66 @@
           "description": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local _build/ directory.",
           "markdownDescription": "The directory in which to store Sphinx's build output.\n\nBy default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory."
         },
+        "esbonio.sphinx.builderName": {
+          "scope": "window",
+          "type": "string",
+          "default": "html",
+          "description": "The builder to use when building the documentation.",
+          "markdownDescription": "The builder to use when building the documentation. **Note:** While many builders will work fine, many features (such as previews) will only work with the `html` builder."
+        },
         "esbonio.sphinx.confDir": {
           "scope": "window",
           "type": "string",
           "default": "",
           "description": "The Language Server should be able to automatically find the folder containing your project's 'conf.py' file. However this setting can be used to force the Language Server to use a particular directory if required."
+        },
+        "esbonio.sphinx.configOverrides": {
+          "scope": "window",
+          "type": "object",
+          "default": {},
+          "description": "Any conf.py options to override."
+        },
+        "esbonio.sphinx.doctreeDir": {
+          "scope": "window",
+          "type": "string",
+          "default": null,
+          "description": "The directory in which to store Sphinx's doctree cache."
+        },
+        "esbonio.sphinx.forceFullBuild": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Force a full build of the documentation project on server startup."
+        },
+        "esbonio.sphinx.keepGoing": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Continue building when errors generated from warnings are encountered"
+        },
+        "esbonio.sphinx.makeMode": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "description": "Flag indicating if the language server should be have like a sphinx-build -M ... command"
+        },
+        "esbonio.sphinx.numJobs": {
+          "scope": "window",
+          "type": "integer",
+          "default": 1,
+          "markdownDescription": "The number of parallel jobs to use during a Sphinx build.\n\n- A value of `0` is equivalent to passing `-j auto` to a `sphinx-build` command.\n- A value of `1` will disable parallel processing."
+        },
+        "esbonio.sphinx.quiet": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Hide standard Sphinx output messages"
+        },
+        "esbonio.sphinx.silent": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Hide all Sphinx output"
         },
         "esbonio.sphinx.srcDir": {
           "scope": "window",
@@ -208,17 +276,23 @@
           "description": "The directory containing your rst source files. By default the Language Server will assume this is the same as `esbonio.sphinx.confDir` but this opton can override this if necessary.",
           "markdownDescription": "The directory containing your rst source files. By default the Language Server will assume this is the same as `#esbonio.sphinx.confDir#` but this opton can override this if necessary."
         },
-        "esbonio.sphinx.forceFullBuild": {
+        "esbonio.sphinx.tags": {
           "scope": "window",
-          "type": "boolean",
-          "default": true,
-          "description": "By default the language server will force a full build of your documentation on startup to help improve the accuracy of some features like diagnostics. Disabling this option can help improve startup time for larger projects at the expense of certain features being less accurate."
+          "type": "array",
+          "default": [],
+          "description": "Tags to enable during a build."
         },
-        "esbonio.sphinx.numJobs": {
+        "esbonio.sphinx.verbosity": {
           "scope": "window",
           "type": "integer",
-          "default": 1,
-          "markdownDescription": "The number of parallel jobs to use during a Sphinx build.\n\n- A value of `0` is equivalent to passing `-j auto` to a `sphinx-build` command.\n- A value of `1` will disable parallel processing."
+          "default": 0,
+          "description": "The verbosity of Sphinx's output"
+        },
+        "esbonio.sphinx.warningIsError": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "description": "Treat any warnings as errors."
         },
         "esbonio.trace.server": {
           "type": "string",
