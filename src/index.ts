@@ -38,10 +38,20 @@ import {
   getConfigServerPythonPath,
   getConfigServerStartupModule,
   getConfigSphinxBuildDir,
+  getConfigSphinxBuilderName,
   getConfigSphinxConfDir,
+  getConfigSphinxConfigOverrides,
+  getConfigSphinxDoctreeDir,
   getConfigSphinxForceFullBuild,
+  getConfigSphinxKeepGoing,
+  getConfigSphinxMakeMode,
   getConfigSphinxNumJobs,
+  getConfigSphinxQuiet,
+  getConfigSphinxSilent,
   getConfigSphinxSrcDir,
+  getConfigSphinxTags,
+  getConfigSphinxVerbosity,
+  getConfigSphinxWarningIsError,
 } from './config';
 import { esbonioLsInstall } from './installer';
 
@@ -135,11 +145,21 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     initializationOptions = {
       sphinx: {
-        srcDir: getConfigSphinxSrcDir(),
+        buildDir,
+        builderName: getConfigSphinxBuilderName(),
         confDir: getConfigSphinxConfDir(),
+        configOverrides: getConfigSphinxConfigOverrides(),
+        doctreeDir: getConfigSphinxDoctreeDir() ? getConfigSphinxDoctreeDir() : undefined,
         forceFullBuild: getConfigSphinxForceFullBuild(esbonioVersion),
+        keepGoing: getConfigSphinxKeepGoing(),
+        makeMode: getConfigSphinxMakeMode(),
         numJobs: getConfigSphinxNumJobs(esbonioVersion) === 0 ? 'auto' : getConfigSphinxNumJobs(esbonioVersion),
-        buildDir: buildDir,
+        quiet: getConfigSphinxQuiet(),
+        silent: getConfigSphinxSilent(),
+        srcDir: getConfigSphinxSrcDir(),
+        tags: getConfigSphinxTags(),
+        verbosity: getConfigSphinxVerbosity(),
+        warningIsError: getConfigSphinxWarningIsError(),
       },
       server: {
         logLevel: getConfigServerLogLevel(),
