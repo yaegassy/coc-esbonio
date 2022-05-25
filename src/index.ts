@@ -283,9 +283,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   );
 
   const codeActionProvider = new EsbonioCodeActionProvider();
-  context.subscriptions.push(
-    languages.registerCodeActionProvider([{ scheme: 'file', language: 'rst' }], codeActionProvider, 'esbonio')
-  );
+  context.subscriptions.push(languages.registerCodeActionProvider(documentSelector, codeActionProvider, 'esbonio'));
 
   const editorCommand = new EditorCommands();
   editorCommand.register(context);
