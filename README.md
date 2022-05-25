@@ -67,7 +67,7 @@ You can also run the installation command manually.
 - `esbonio.sphinx.confDir`: The Language Server should be able to automatically find the folder containing your project's 'conf.py' file. However this setting can be used to force the Language Server to use a particular directory if required, default: `""`
 - `esbonio.sphinx.srcDir`: The directory containing your rst source files. By default the Language Server will assume this is the same as `#esbonio.sphinx.confDir#` but this opton can override this if necessary, default: `""`
 - `esbonio.sphinx.forceFullBuild`: By default the language server will force a full build of your documentation on startup to help improve the accuracy of some features like diagnostics. Disabling this option can help improve startup time for larger projects at the expense of certain features being less accurate, default: `true`
-- `esbonio.sphinx.numJobs`: The number of parallel jobs to use during a Sphinx build, default: `0`
+- `esbonio.sphinx.numJobs`: The number of parallel jobs to use during a Sphinx build, default: `1`
   - A value of `0` is equivalent to passing `-j auto` to a `sphinx-build` command.
   - A value of `1` will disable parallel processing
 - `esbonio.trace.server`: Traces the communication between coc.nvim and the esbonio language server, valid option: ["off", "messages", "verbose"], default: `"off"`
