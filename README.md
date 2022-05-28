@@ -7,13 +7,15 @@
 ## Features
 
 - Completion
-  - The language server implements [textDocument/completion](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_completion) and can offer suggestions in a variety of contexts.
-- Document Symbols
-  - The language server implements [textDocument/documentSymbol](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_documentSymbol) which powers features like the “Outline” view in coc.nvim.
+  - The language server implements [textDocument/completion](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_completion) and can offer suggestions in a variety of contexts.
+- Definition
+  - The language server implements [textDocument/definition](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_definition) to provide the location of objects linked to by certain roles. Currently only the `:ref:` and `:doc:` roles are supported.
 - Diagnostics
-  - Using [textDocument/publishDiagnostics](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_publishDiagnostics) the language server is able to report Sphinx errors that are reported during builds.
-- Goto Definition
-  - The language server implements [textDocument/definition](https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_definition) to provide the location of objects linked to by certain roles. Currently only the `:ref:` and `:doc:` roles are supported.
+  - Using [textDocument/publishDiagnostics](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_publishDiagnostics) the language server is able to report Sphinx errors that are reported during builds.
+- Document Symbols
+  - The language server implements [textDocument/documentSymbol](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_documentSymbol) which powers features like the "Outline" view in coc.nvim.
+- Hover
+  - The language server implements [textDocument/hover](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_hover) to provide easy access to documentation for roles and directives.
 - Code Action by client side feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
   - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/10)
