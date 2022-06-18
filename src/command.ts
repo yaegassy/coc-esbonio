@@ -90,7 +90,7 @@ export class EditorCommands {
       return;
     }
 
-    const inlineLink = `\`${link.label} <${link.url}>\`_`;
+    const inlineLink = `\`${link.label} <${link.url}>\`__`;
 
     if (!range) {
       const state = await workspace.getCurrentState();
