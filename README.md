@@ -16,6 +16,8 @@
   - The language server implements [textDocument/documentSymbol](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_documentSymbol) which powers features like the "Outline" view in coc.nvim.
 - Hover
   - The language server implements [textDocument/hover](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_hover) to provide easy access to documentation for roles and directives.
+- Implementation
+  - The language server implements [textDocument/implementation](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_implementation) so you can easily find the implementation of a given role or directive.
 - Code Action by client side feature
   - Section builder feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/2)
   - Insert link feature. [DEMO](https://github.com/yaegassy/coc-esbonio/pull/10)
