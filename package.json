@@ -1,6 +1,6 @@
 {
   "name": "coc-esbonio",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "esbonioLsVersion": "0.14.1",
   "description": "esbonio ([Sphinx] Python Documentation Generator) language server extension for coc.nvim",
   "author": "yaegassy <yosstools@gmail.com>",
