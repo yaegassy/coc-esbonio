@@ -65,6 +65,10 @@ export function getConfigServerStartupModule() {
   return workspace.getConfiguration('esbonio').get<string>('server.startupModule', 'esbonio');
 }
 
+export function getConfigServerShowDeprecationWarnings() {
+  return workspace.getConfiguration('esbonio').get<boolean>('server.showDeprecationWarnings', false);
+}
+
 /**
  * Sphinx
  */

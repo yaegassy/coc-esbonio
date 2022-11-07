@@ -36,6 +36,7 @@ import {
   getConfigServerLogFilter,
   getConfigServerLogLevel,
   getConfigServerPythonPath,
+  getConfigServerShowDeprecationWarnings,
   getConfigServerStartupModule,
   getConfigSphinxBuildDir,
   getConfigSphinxBuilderName,
@@ -165,6 +166,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         logLevel: getConfigServerLogLevel(),
         logFilter: getConfigServerLogFilter(),
         hideSphinxOutput: getConfigServerHidSphinxOutput(),
+        showDeprecationWarnings: getConfigServerShowDeprecationWarnings(),
       },
     };
   } else {

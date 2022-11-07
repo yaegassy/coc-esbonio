@@ -74,6 +74,7 @@ esbonio's language server can also handle python file docstrings. `coc-esbonio` 
 - `esbonio.server.logLevel`: The level of log message to show in the log, default: `"error"`
 - `esbonio.server.logFilter`: A list of logger names to limit output from, type: array, default: `null`
 - `esbonio.server.pythonPath`: The path to the Python interpreter to use when running the Langague Server.By default this extension will try to use the interpreter configured via the Python Extension. If you do not use the Python Extension or you wish to use a different environment, then this option can be used to override the default behavior., default: `""`
+- `esbonio.server.showDeprecationWarnings`: Developer flag to enable deprecation warnings, default: `false`
 - `esbonio.server.hideSphinxOutput`: Hide Sphinx build output from the Language Server log, default: `false`
   - This option will be removed when the language server reaches v1.0. The `esbonio.sphinx.quiet` and `esbonio.sphinx.silent` options should be used instead.
 - `esbonio.sphinx.buildDir`: The directory in which to store Sphinx's build output.By default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory, default: `null`
