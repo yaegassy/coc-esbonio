@@ -41,7 +41,7 @@
     "@types/rimraf": "^3.0.2",
     "@types/semver": "^7.3.10",
     "@types/which": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/eslint-plugin": "^5.42.0",
     "@typescript-eslint/parser": "^5.42.0",
     "coc.nvim": "^0.0.81",
     "esbuild": "^0.15.13",
