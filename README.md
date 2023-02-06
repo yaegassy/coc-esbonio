@@ -77,6 +77,7 @@ esbonio's language server can also handle python file docstrings. `coc-esbonio` 
 - `esbonio.server.showDeprecationWarnings`: Developer flag to enable deprecation warnings, default: `false`
 - `esbonio.server.hideSphinxOutput`: Hide Sphinx build output from the Language Server log, default: `false`
   - This option will be removed when the language server reaches v1.0. The `esbonio.sphinx.quiet` and `esbonio.sphinx.silent` options should be used instead.
+- `esbonio.server.completion.preferredInsertBehavior`: Indicate to the server how you would prefer completions to behave when accepted, valid opton: `["insert", "replace"]`, default: `"replace"`
 - `esbonio.sphinx.buildDir`: The directory in which to store Sphinx's build output.By default the Language Server will store any build files in a storage area provided by coc.nvim, this option allows you to override this to be a directory of your choosing e.g. your local `_build/` directory, default: `null`
 - `esbonio.sphinx.builderName`: The builder to use when building the documentation, default: `"html"`
 - `esbonio.sphinx.confDir`: The Language Server should be able to automatically find the folder containing your project's 'conf.py' file. However this setting can be used to force the Language Server to use a particular directory if required, default: `""`

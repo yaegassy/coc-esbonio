@@ -207,6 +207,20 @@
           "description": "Hide Sphinx build output from the Language Server log.",
           "deprecationMessage": "This option will be removed when the language server reaches v1.0. The esbonio.sphinx.quiet and esbonio.sphinx.silent options should be used instead."
         },
+        "esbonio.server.completion.preferredInsertBehavior": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "insert",
+            "replace"
+          ],
+          "enumDescriptions": [
+            "Completions will only append to existing text. Server will only provide suggestions compatible with existing text.",
+            "Completions will replace existing text, allowing for complete rewrites of existing items. Server will respond with all valid options."
+          ],
+          "default": "replace",
+          "description": "Indicate to the server how you would prefer completions to behave when accepted."
+        },
         "esbonio.sphinx.buildDir": {
           "scope": "window",
           "type": "string",

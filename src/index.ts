@@ -28,6 +28,7 @@ import { EditorCommands } from './command';
 import {
   getConfigEnableFixDirectiveCompletion,
   getConfigEsbonioEnable,
+  getConfigServerCompletionPreferredInsertBehavior,
   getConfigServerEnabled,
   getConfigServerEnabledInPyFiles,
   getConfigServerExcludedModules,
@@ -167,6 +168,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
         logFilter: getConfigServerLogFilter(),
         hideSphinxOutput: getConfigServerHidSphinxOutput(),
         showDeprecationWarnings: getConfigServerShowDeprecationWarnings(),
+        completion: {
+          preferredInsertBehavior: getConfigServerCompletionPreferredInsertBehavior,
+        },
       },
     };
   } else {

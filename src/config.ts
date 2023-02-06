@@ -69,6 +69,10 @@ export function getConfigServerShowDeprecationWarnings() {
   return workspace.getConfiguration('esbonio').get<boolean>('server.showDeprecationWarnings', false);
 }
 
+export function getConfigServerCompletionPreferredInsertBehavior() {
+  return workspace.getConfiguration('esbonio').get<string>('server.completion.preferredInsertBehavior', 'replace');
+}
+
 /**
  * Sphinx
  */
