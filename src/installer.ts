@@ -23,7 +23,7 @@ export async function esbonioLsInstall(pythonCommand: string, context: Extension
   statusItem.show();
 
   const installCmd =
-    `${pythonCommand} -m venv ${pathVenv} && ` +
+    `"${pythonCommand}" -m venv ${pathVenv} && ` +
     `${pathVenvPython} -m pip install -U pip esbonio==${ESBONIO_LS_VERSION}`;
 
   rimraf.sync(pathVenv);
