@@ -230,7 +230,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         position: Position,
         context: CompletionContext,
         token: CancellationToken,
-        next: ProvideCompletionItemsSignature
+        next: ProvideCompletionItemsSignature,
       ) => {
         const res = await Promise.resolve(next(document, position, context, token));
         const doc = workspace.getDocument(document.uri);
@@ -284,7 +284,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         await installWrapper(builtinInstallPythonCommand, context);
         client.start();
       }
-    })
+    }),
   );
 
   context.subscriptions.push(
@@ -293,7 +293,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         await client.stop();
         client.start();
       }
-    })
+    }),
   );
 
   const codeActionProvider = new EsbonioCodeActionProvider();

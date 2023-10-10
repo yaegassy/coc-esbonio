@@ -111,7 +111,7 @@ export class EditorCommands {
    */
   register(context: ExtensionContext) {
     context.subscriptions.push(
-      commands.registerCommand(EditorCommands.INSERT_INLINE_LINK, this.insertInlineLink, this, true)
+      commands.registerCommand(EditorCommands.INSERT_INLINE_LINK, this.insertInlineLink, this, true),
     );
     context.subscriptions.push(commands.registerCommand(EditorCommands.INSERT_LINK, this.insertLink, this, true));
   }
