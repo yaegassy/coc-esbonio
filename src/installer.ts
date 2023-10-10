@@ -2,7 +2,7 @@ import { ExtensionContext, window } from 'coc.nvim';
 
 import path from 'path';
 
-import rimraf from 'rimraf';
+import { rimrafSync } from 'rimraf';
 import child_process from 'child_process';
 import util from 'util';
 
@@ -26,7 +26,7 @@ export async function esbonioLsInstall(pythonCommand: string, context: Extension
     `"${pythonCommand}" -m venv ${pathVenv} && ` +
     `${pathVenvPython} -m pip install -U pip esbonio==${ESBONIO_LS_VERSION}`;
 
-  rimraf.sync(pathVenv);
+  rimrafSync(pathVenv);
   try {
     window.showInformationMessage(`Install esbonio...`);
     await exec(installCmd);
