@@ -47,7 +47,7 @@
     "eslint": "^8.33.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.3",
+    "prettier": "^3.0.3",
     "rimraf": "^5.0.1",
     "semver": "^7.3.7",
     "typescript": "^5.2.2",
