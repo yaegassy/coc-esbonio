@@ -211,10 +211,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.41.tgz#d0b939d94c1d7bd53d04824af45f1139b8c45615"
   integrity sha512-dueRKfaJL4RTtSa7bWeTK1M+VH+Gns73oCgzvYfHZywRCoPSd8EkXBL0mZ9unPTveBn+D9phZBaxuzpwjWkW0g==
 
-"@types/node@^18.11.19":
-  version "18.11.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.19.tgz#35e26df9ec441ab99d73e99e9aca82935eea216d"
-  integrity sha512-YUgMWAQBWLObABqrvx8qKO1enAvBUdjZOAWQ5grBAkp5LQv45jBvYKZ3oFS9iKRCQyFjqw6iuEa1vmFqtxYLZw==
+"@types/node@^18.18.3":
+  version "18.18.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.18.4.tgz#519fef47a13cf869be290c20fc6ae9b7fe887aa7"
+  integrity sha512-t3rNFBgJRugIhackit2mVcLfF6IRc0JE4oeizPQL8Zrm8n2WY/0wOdpOPhdtG0V9Q2TlW/axbF1MJ6z+Yj/kKQ==
 
 "@types/rimraf@^3.0.2":
   version "3.0.2"
